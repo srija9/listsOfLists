@@ -1,0 +1,32 @@
+{
+  "name": "react-ui-trello",
+  "version": "1.0.0",
+  "description": "It is a trello like tool which allows to create lists and then cards inside the lists. You can add/delete lists and cards. You can also drag and drop cards across lists. All the changes are saved across refreshes.",
+  "keywords": [],
+  "homepage": "https://friendly-jackson-b30eee.netlify.app/",
+  "main": "src/index.js",
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scripts": "4.0.0",
+    "react-uuid": "1.0.2"
+  },
+  "devDependencies": {
+    "@babel/runtime": "7.13.8",
+    "typescript": "4.1.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "author": "srija",
+  "license": "ISC"
+}
