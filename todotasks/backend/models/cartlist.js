@@ -11,7 +11,11 @@ const listSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'TaskCard'
         }
-    ]
+    ],
+    count: { 
+        type: Number,
+        require: true,
+    }
 });
 
 module.exports = mongoose.model('CartList', listSchema);

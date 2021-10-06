@@ -1,32 +1,53 @@
 import React, { useContext } from "react";
 import uuid from "react-uuid";
+import axios from 'axios';
 import { TaskCard } from "../taskCard/taskCard";
 import { AppStateContext } from "../appState/appState.context";
 import "./cardList.css";
 
-export const CardList = ({ cardlist, cardlistIdx }) => {
-  const { cards, title } = cardlist;
+export const CardList = ({ cardlist}) => {
+  const { tasks, title } = cardlist;
   const { stateAndDispatch } = useContext(AppStateContext);
 
   const [appState, dispatch] = stateAndDispatch;
-  const updatedState = [...appState];
+  let updatedState = [...appState];
   const handleCardAdd = () => {
-    updatedState[cardlistIdx].cards.push({
-      id: uuid(),
-      title: "",
-      description: ""
-    });
-    dispatch({ type: "addCard", value: updatedState });
+    // 
+    axios.post('http://localhost:8080/feed/add-task/'+cardlist._id, { title: " ", description:" "})
+    .then((res) => {
+      console.log(res.data)
+      updatedState = res.data.lists;
+      dispatch({ type: "addCard", value: updatedState });
+     }).catch((error) => {
+      console.log(error)
+     });
+   // dispatch({ type: "addCard", value: updatedState });
   };
 
   const handleListRemove = () => {
-    updatedState.splice(cardlistIdx, 1);
-    dispatch({ type: "removeList", value: updatedState });
+    //updatedState.splice(cardlistIdx, 1);
+    axios.post('http://localhost:8080/feed/delete-list/'+cardlist._id)
+    .then((res) => {
+      console.log(res.data)
+      updatedState = res.data.lists;
+      dispatch({ type: "removeList", value: updatedState });
+     }).catch((error) => {
+      console.log(error)
+     });
+    //dispatch({ type: "removeList", value: updatedState });
   };
 
   const handleListTitleChange = (e) => {
-    updatedState[cardlistIdx].title = e.target.value;
-    dispatch({ type: "addListTitle", value: updatedState });
+   // updatedState[cardlistIdx].title = e.target.value;
+   axios.post('http://localhost:8080/feed/update-list/'+cardlist._id, {title:e.target.value})
+    .then((res) => {
+      console.log(res.data)
+      updatedState = res.data.lists;
+      dispatch({ type: "addListTitle", value: updatedState });
+     }).catch((error) => {
+      console.log(error)
+     });
+   // dispatch({ type: "addListTitle", value: updatedState });
   };
 
   const onDragOver = (e) => {
@@ -64,15 +85,16 @@ export const CardList = ({ cardlist, cardlistIdx }) => {
         Remove List
       </button>
       <span className="card-number c-n-m">
-        {updatedState[cardlistIdx].cards.length}
+        {/* {updatedState[cardlist._id].tasks.length} */}
+        {cardlist.tasks.length}
       </span>
       <div className="card-list-container c-l-c-m">
-        {cards.map((card, cardIdx, arr) => (
+        {tasks.map((card, arr) => (
           <TaskCard
-            key={card.id}
+            key={card._id}
             card={card}
-            cardIdx={cardIdx}
-            cardlistIdx={cardlistIdx}
+           // cardIdx={card._id}
+             cardlistIdx={cardlist._id}
           />
         ))}
       </div>

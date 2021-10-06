@@ -6,6 +6,7 @@
   "homepage": "https://friendly-jackson-b30eee.netlify.app/",
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.22.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "4.0.0",

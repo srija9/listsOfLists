@@ -4,12 +4,16 @@ const Schema = mongoose.Schema;
 const taskSchema = new Schema({
     title: { 
         type: String,
-        require: true,
+        //require: true,
     },
     description: { 
         type: String,
-        require: true,
+        //require: true,
     },
+    count: { 
+        type: Number,
+        require: true,
+    }
     
 });
 

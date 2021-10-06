@@ -21,9 +21,9 @@ exports.getLists = async (req, res, next) => {
 }
 
 exports.postCard = async (req, res, next) => {
-    const title = req.body.title ? req.body.title : " ";
+    //const title = req.body.title ? req.body.title : " ";
     const card = new CartList({
-        title: title,
+        //title: title,
         tasks: []
     });
     try {
@@ -61,12 +61,13 @@ exports.postCard = async (req, res, next) => {
 
 exports.postTask = async (req, res, next) => {
     const cardId = req.params.cardId;
-    const title = req.body.title ? req.body.title : "";
-    const description = req.body.description ? req.body.description : "";
+    //const title = req.body.title ? req.body.title : "";
+    //const description = req.body.description ? req.body.description : "";
     
     const task = new TaskCard({
-        title: title,
-        description: description,
+        // title: title,
+        // description: description,
+        count : 1
     });
 
     try {
@@ -141,12 +142,30 @@ exports.updateTask = async (req, res, next) => {
     //const cardId = req.params.cardId;
     const taskId = req.params.taskId;
 
-    const title = req.body.title;
-    const description = req.body.description;
+    const details = req.body.title ? 0 : 1;
+    let data;
+
+    if(details == 0)
+    {
+         data = req.body.title;
+    }
+    else
+    {
+        data = req.body.description;
+    }
+
+    // const title = req.body.title;
+
+    // const description = req.body.description;
     try{
         const task = await TaskCard.findById(taskId);
-        task.title = title;
-        task.description = description;
+        if(details == 0) {
+            task.title = data;
+        }
+        else {
+            task.description = data;
+        }  
+        
         await task.save();
 
         let Lists;
